@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div class="container text-center">
+  <input class="lead" id="new_url" style="width:50%" value="{{url_for('redirect_code', code=code, _external=True)}}"
+    readonly>
+  <br>
+  <button onclick="myFunction()" class="btn btn-primary my-2">Copy URL</button>
+</div>
+
+<script>
+  function myFunction() {
+    var copyText = document.getElementById("new_url");
+    copyText.select();
+    document.execCommand("copy");
+  }
+</script>
+
+{% endblock %}

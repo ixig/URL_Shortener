@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div class="container text-center">
+  <h2 class="jumbotron-heading">Sorry, that's an Invalid Short URL!</h2>
+  <br>
+  <p>
+    <a href="{{url_for('home')}}"><button class="btn btn-primary my-2">Home</button></a>
+  </p>
+</div>
+
+{% endblock %}

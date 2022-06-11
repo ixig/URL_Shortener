@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div class="container">
+
+  <div class="card-deck mb-3">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal text-center">Website</h4>
+      </div>
+      <div class="card-body">
+        <form action="short-url" method="post">
+          <label for="url">Website URL:</label>
+          <input type="url" class="form-control" name="url" id="url" value="" required>
+          <br>
+          <label for="code">Short Name:</label>
+          <input type="text" class="form-control" name="code" id="code" value="" required>
+          <br>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Create</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal text-center">File</h4>
+      </div>
+      <div class="card-body">
+        <form action="short-url" method="post" enctype="multipart/form-data">
+          <label for="long_url">File URL:</label>
+          <input type="file" class="form-control" name="file" id="file" required>
+          <br>
+          <label for="code">Short Name:</label>
+          <input type="text" class="form-control" name="code" id="code" value="" required>
+          <br>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Create</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {% if session %}
+  <h3>Your Short Names:</h3>
+  <ul>
+    {% for item in session %}
+    {% if session[item].startswith('http') %}
+    <li>{{item}}: <a href="{{session[item]}}">{{session[item]}}</a></li>
+    {% else %}
+    <li>{{item}}: <a href="/{{item}}">{{session[item]}}</a></li>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+  </ul>
+
+</div>
+
+{% endblock %}
