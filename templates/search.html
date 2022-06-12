@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div class="container mb-3">
+  <input class="mr-2" dtype="text" id="searchInput" size="30" value="">
+  <button class="btn btn-primary btn-sm" onclick="search()">SEARCH</button>
+</div>
+
+<div class="container">
+  <table class="table" id="myTable">
+    <thead>
+      <tr>
+        <th>Shortened</th>
+        <th>URL or Filename</th>
+      </tr>
+    </thead>
+    <tbody id="myBody"></tbody>
+  </table>
+</div>
+
+<script>
+  function search() {
+    document.getElementById("myBody").innerHTML = "";
+    let searchTerm = document.getElementById("searchInput").value;
+    fetch("api/search?" + new URLSearchParams({ value: searchTerm }))
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (myJson) {
+        let myTable = document.querySelector("#myBody");
+        for (let key of Object.keys(myJson)) {
+          let newRow = document.createElement("tr");
+          let newKey = document.createElement("td");
+          let newVal = document.createElement("td");
+          newKey.innerHTML = key;
+          newVal.innerHTML = myJson[key];
+          newRow.appendChild(newKey);
+          newRow.appendChild(newVal);
+          myTable.appendChild(newRow);
+        }
+      })
+      .catch(function (error) {
+        console.log("Error: " + error);
+      });
+  }
+</script>
+
+{% endblock %}

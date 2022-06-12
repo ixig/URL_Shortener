@@ -1,6 +1,7 @@
-# URL Shortener Flask App
+# URL Shortener Flask App with Search REST API
 
-<img src=".github/URL_Shortener.png">
+<img src=".github/screen1.png">
+<img src=".github/screen2.png">
 
 ## Installation
 

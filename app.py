@@ -1,6 +1,7 @@
 import atexit
 import json
 import os
+from imp import reload
 
 from flask import (Flask, abort, flash, jsonify, redirect, render_template,
                    request, session, url_for)  # fmt: skip
@@ -74,10 +75,28 @@ def api_session():
     return jsonify(session)
 
 
+@app.route('/api/search')
+def api_search():
+    results = {}
+    if 'value' in request.args:
+        search_term = request.args['value'].lower()
+        for code, value in urls.items():
+            if 'url' in value and search_term in value['url'].lower():
+                results[code] = value['url']
+            elif 'file' in value and search_term in value['file'].lower():
+                results[code] = value['file'][len(code) + 1 :]
+    return jsonify(results)
+
+
+@app.route('/search')
+def search():
+    return render_template('search.html')
+
+
 @app.errorhandler(404)
 def err_404(error):
     return render_template('404.html'), 404
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(debug=True)
